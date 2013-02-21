@@ -3,7 +3,7 @@
 
 Name:           bloomd
 Version:        0.5.0
-Release:        2.vortex%{?dist}
+Release:        3.vortex%{?dist}
 Summary:        high-performance C server which is used to expose bloom filters and operations over them to networked clients
 Vendor:         Vortex RPM
 
@@ -43,6 +43,23 @@ install -D -m 0755 %{SOURCE2} $RPM_BUILD_ROOT/%{_initddir}/%{name}
 rm -rf $RPM_BUILD_ROOT
 
 
+%post
+/sbin/chkconfig --add %{name}
+
+
+%preun
+if [ $1 -eq 0 ] ; then
+        /sbin/service %{name} stop >/dev/null 2>&1
+        /sbin/chkconfig --del %{name}
+fi
+
+
+%postun
+if [ "$1" -ge "1" ] ; then
+        /sbin/service %{name} restart >/dev/null 2>&1
+fi
+
+
 %files
 %defattr(-,root,root,-)
 %doc LICENSE CHANGELOG.mdown README.rst TODO.mdown
@@ -53,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-3.vortex
+- Add post/pre actions.
+
 * Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-2.vortex
 - Add init-script.
 
