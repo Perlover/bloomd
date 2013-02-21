@@ -22,7 +22,7 @@ lockfile=/var/lock/subsys/$prog
 
 start() {
     echo -n $"Starting $prog: "
-    daemon --user bloomd $exec
+    daemon --user bloomd $exec -f /etc/bloomd.conf
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
