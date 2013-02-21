@@ -1,16 +1,20 @@
+%global _git_author armon
+%global _git_commit 6dfd4b5ce672a0e92d66181a507e6f452ca1f5ab
+
 Name:           bloomd
 Version:        0.5.0
 Release:        1.vortex%{?dist}
 Summary:        high-performance C server which is used to expose bloom filters and operations over them to networked clients
+Vendor:         Vortex RPM
 
 Group:          System Environment/Daemons
 License:        BSD
-URL:            https://github.com/armon/bloomd
-Source0:        bloomd-0.5.0.tar.gz
+URL:            https://github.com/%{_git_author}/%{name}
+Source0:        %{name}-%{version}.tar.gz
+Source1:        %{name}.conf
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  scons
-#Requires:       
 
 %description
 Bloomd is a high-performance C server which is used to expose bloom filters and
@@ -20,20 +24,17 @@ is human readable, and similar to memcached.
 
 
 %prep
-%setup -q -n bloomd-6dfd4b5ce672a0e92d66181a507e6f452ca1f5ab
+%setup -q -n bloomd-%{_git_commit}
 
 
 %build
 scons
-ls -la
-#%configure
-#make %{?_smp_mflags}
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
-
+install -D -m 0755 -s %{name} %{_sbindir}/%{name}
+mkdir $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -41,8 +42,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc
-
+%doc LICENSE CHANGELOG.mdown README.rst TODO.mdown
+%config(noreplace) %{name}.conf
+%{_sharedstatedir}/%{name}
+%{_sbindir}/%{name}
 
 
 %changelog
