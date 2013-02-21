@@ -34,7 +34,7 @@ scons
 %install
 rm -rf $RPM_BUILD_ROOT
 install -D -m 0755 -s %{name} $RPM_BUILD_ROOT/%{_sbindir}/%{name}
-mkdir $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}
+mkdir -p $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
