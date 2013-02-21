@@ -10,7 +10,7 @@ Source0:        bloomd-0.5.0.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  scons
-Requires:       
+#Requires:       
 
 %description
 Bloomd is a high-performance C server which is used to expose bloom filters and
