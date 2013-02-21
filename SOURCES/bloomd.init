@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# bloomd - high-performance C server which is used to expose bloom filters and
+#          operations over them to networked clients
+#
+# chkconfig:   - 20 80
+# description: Bloomd is a high-performance C server which is used to expose \
+#              bloom filters and operations over them to networked clients. \
+#              It uses a simple ASCI protocol which is human readable, and \
+#              similar to memcached. 
+
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+exec="/usr/sbin/bloomd"
+prog=$(basename $exec)
+
+[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+
+lockfile=/var/lock/subsys/$prog
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon $exec
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+case "$1" in
+    start|stop|restart)
+        $1
+        ;;
+    force-reload)
+        restart
+        ;;
+    status)
+        status $prog
+        ;;
+    try-restart|condrestart)
+        if status $prog >/dev/null ; then
+            restart
+        fi
+	;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|try-restart}"
+        exit 2
+esac

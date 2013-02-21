@@ -3,7 +3,7 @@
 
 Name:           bloomd
 Version:        0.5.0
-Release:        1.vortex%{?dist}
+Release:        2.vortex%{?dist}
 Summary:        high-performance C server which is used to expose bloom filters and operations over them to networked clients
 Vendor:         Vortex RPM
 
@@ -12,6 +12,7 @@ License:        BSD
 URL:            https://github.com/%{_git_author}/%{name}
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}.conf
+Source2:        %{name}.init
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  scons
@@ -36,6 +37,7 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}
 install -D -m 0644 %{SOURCE1} $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}.conf
 install -D -m 0755 -s %{name} $RPM_BUILD_ROOT/%{_sbindir}/%{name}
+install -D -m 0755 %{SOURCE2} $RPM_BUILD_ROOT/%{_initddir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -47,9 +49,13 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/%{name}.conf
 %{_sharedstatedir}/%{name}
 %{_sbindir}/%{name}
+%{_initddir}/%{name}
 
 
 %changelog
+* Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-2.vortex
+- Add init-script.
+
 * Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-1.vortex
 - Initial packaging.
 
