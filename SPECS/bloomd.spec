@@ -43,7 +43,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc LICENSE CHANGELOG.mdown README.rst TODO.mdown
-%config(noreplace) %{name}.conf
+%config(noreplace) %{_sysconfdir}/%{name}.conf
 %{_sharedstatedir}/%{name}
 %{_sbindir}/%{name}
 
