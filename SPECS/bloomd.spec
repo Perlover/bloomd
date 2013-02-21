@@ -1,9 +1,12 @@
 %global _git_author armon
 %global _git_commit 6dfd4b5ce672a0e92d66181a507e6f452ca1f5ab
 
+%global _bloomd_user  bloomd
+%global _bloomd_group bloomd
+
 Name:           bloomd
 Version:        0.5.0
-Release:        3.vortex%{?dist}
+Release:        4.vortex%{?dist}
 Summary:        high-performance C server which is used to expose bloom filters and operations over them to networked clients
 Vendor:         Vortex RPM
 
@@ -43,6 +46,14 @@ install -D -m 0755 %{SOURCE2} $RPM_BUILD_ROOT/%{_initddir}/%{name}
 rm -rf $RPM_BUILD_ROOT
 
 
+%pre
+getent group %{_bloomd_group} >/dev/null || groupadd -r %{_bloomd_group}
+getent passwd %{_bloomd_user} >/dev/null || \
+    useradd -r -g %{_bloomd_user} -d %{_bloomd_home} -s /sbin/nologin \
+    -c "bloomd user" %{_bloomd_user}
+exit 0
+
+
 %post
 /sbin/chkconfig --add %{name}
 
@@ -64,12 +75,15 @@ fi
 %defattr(-,root,root,-)
 %doc LICENSE CHANGELOG.mdown README.rst TODO.mdown
 %config(noreplace) %{_sysconfdir}/%{name}.conf
-%{_sharedstatedir}/%{name}
+%attr(0775,%{_bloomd_user},%{_bloomd_group}) %{_sharedstatedir}/%{name}
 %{_sbindir}/%{name}
 %{_initddir}/%{name}
 
 
 %changelog
+* Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-4.vortex
+- Add bloomd user and group.
+
 * Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-3.vortex
 - Add post/pre actions.
 
