@@ -3,10 +3,11 @@
 
 %global _bloomd_user  bloomd
 %global _bloomd_group bloomd
+%global _bloomd_home  /var/lib/bloomd
 
 Name:           bloomd
 Version:        0.5.0
-Release:        4.vortex%{?dist}
+Release:        5.vortex%{?dist}
 Summary:        high-performance C server which is used to expose bloom filters and operations over them to networked clients
 Vendor:         Vortex RPM
 
@@ -81,6 +82,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-5.vortex
+- Add bloomd homedir.
+
 * Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-4.vortex
 - Add bloomd user and group.
 
