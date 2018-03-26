@@ -1,15 +1,15 @@
 %global _git_author armon
-%global _git_commit 6dfd4b5ce672a0e92d66181a507e6f452ca1f5ab
+%global _git_commit 16a99fdfb80d2ee645166889e7bea124c72b8cd0
 
 %global _bloomd_user  bloomd
 %global _bloomd_group bloomd
 %global _bloomd_home  /var/lib/bloomd
 
 Name:           bloomd
-Version:        0.5.0
-Release:        7.vortex%{?dist}
+Version:        0.7.5
+Release:        1.perlover%{?dist}
 Summary:        high-performance C server which is used to expose bloom filters and operations over them to networked clients
-Vendor:         Vortex RPM
+Vendor:         Perlover RPM
 
 Group:          System Environment/Daemons
 License:        BSD
@@ -82,6 +82,9 @@ fi
 
 
 %changelog
+* Mon Mar 26 2018 Perlover <perlover@perlover.com> - 0.7.5-1.perlover
+- Update for v0.7.5
+
 * Fri Feb 22 2013 Ilya A. Otyutskiy <sharp@thesharp.ru> - 0.5.0-7.vortex
 - Fix init-script.
 
