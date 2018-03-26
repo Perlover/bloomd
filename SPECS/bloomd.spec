@@ -29,7 +29,7 @@ is human readable, and similar to memcached.
 
 
 %prep
-%setup -q -n bloomd-%{_git_commit}
+%setup -q -n bloomd-%{version}
 
 
 %build
@@ -74,7 +74,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc LICENSE CHANGELOG.mdown README.rst TODO.mdown
+%doc LICENSE CHANGELOG.mdown README.md TODO.mdown
 %config(noreplace) %{_sysconfdir}/%{name}.conf
 %attr(0775,%{_bloomd_user},%{_bloomd_group}) %{_sharedstatedir}/%{name}
 %{_sbindir}/%{name}
